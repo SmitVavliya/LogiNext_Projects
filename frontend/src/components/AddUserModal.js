@@ -17,7 +17,9 @@ class AddUserModal extends Component {
     if(name !== "" && email !== "" && phone !== "" && website !== "") {
       let data = await addUser({name, email, phone, website});
       this.props.handleModal();
-      this.props.setUpdatedData([...this.props.data, data]);
+      if(this.props.data.length < 4) this.props.setUpdatedData([...this.props.data, data]);
+      if(this.props.data.length == 4) this.props.setTotalPages();
+      this.props.setTotalElements();
     }
   };
 

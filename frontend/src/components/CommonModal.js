@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import AddUserModal from "./AddUserModal";
 import { Modal } from "react-materialize";
 
-const CommonModal = ({setUpdatedData, data}) => {
+const CommonModal = ({setUpdatedData, data, setTotalElements, setTotalPages}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleModal = () => {
@@ -34,7 +34,7 @@ const CommonModal = ({setUpdatedData, data}) => {
                 </button>
             }
         >
-            <AddUserModal handleModal={handleModal} setUpdatedData={setUpdatedData} data={data} />
+            <AddUserModal setTotalPages={setTotalPages} handleModal={handleModal} setUpdatedData={setUpdatedData} data={data} setTotalElements={setTotalElements} />
         </Modal>
     )
 }

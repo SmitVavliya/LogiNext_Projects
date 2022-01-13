@@ -29,12 +29,20 @@ class App extends Component {
         totalPages: data.totalPages,
         totalElements: data.totalElements
       });
-    }, 3000);
+    }, 100);
   }
 
   setUpdatedData = (data) => {
     this.setState({ data });
   };
+
+  setTotalElements = () => {
+    this.setState({totalElements: this.state.totalElements + 1});
+  }
+
+  setTotalPages = () => {
+    this.setState({totalPages: this.state.totalPages + 1});
+  }
 
   setEditedData = (userData) => {
     this.setState({data: this.state.data.map((user) => {
@@ -62,7 +70,7 @@ class App extends Component {
         {!this.state.loading ? (
           <div>
             {
-              this.state.totalElements === 0 ? <Empty totalElements={this.state.totalElements} setUpdatedData={this.setUpdatedData} data={this.state.data} /> : 
+              this.state.totalElements === 0 ? <Empty setTotalElements={this.setTotalElements} setUpdatedData={this.setUpdatedData} data={this.state.data} /> : 
               <div>
                 <div className="row">
                   {this.state.data.map((user) => {
@@ -110,7 +118,7 @@ class App extends Component {
                           }
                           onSelect={(p) => this.loadPaginateData(p)}
                         /> 
-                    : <CommonModal setUpdatedData={this.setUpdatedData} data={this.state.data} />
+                    : <CommonModal setTotalPages={this.setTotalPages} setUpdatedData={this.setUpdatedData} data={this.state.data} setTotalElements={this.setTotalElements} />
                     }
                   </div>
                 </div>
