@@ -29,7 +29,7 @@ class App extends Component {
         totalPages: data.totalPages,
         totalElements: data.totalElements
       });
-    }, 100);
+    }, 3000);
   }
 
   setUpdatedData = (data) => {
