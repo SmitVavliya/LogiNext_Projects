@@ -83,3 +83,13 @@ ul:not(.browser-default) {
   justify-content: center !important;
   align-items: center !important;
 }
+
+nav {
+  background-color: #232f3e !important;
+  padding: 0px 10px !important;
+  overflow: hidden !important;
+}
+
+[type="checkbox"] + span:not(.lever) {
+  margin-right: 20px !important;
+}

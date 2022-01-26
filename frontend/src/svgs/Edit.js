@@ -26,31 +26,26 @@ class Edit extends Component {
           options={{
             dismissible: true,
             endingTop: "10%",
-            inDuration: 250,
+            inDuration: 400,
             onCloseEnd: null,
             onCloseStart: null,
             onOpenEnd: () => this.handleModal(),
             onOpenStart: null,
             opacity: 0.5,
-            outDuration: 250,
+            outDuration: 400,
             preventScrolling: true,
             startingTop: "4%",
           }}
           trigger={
             <button
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                outline: "none",
-              }}
+              style={styles.edit_but_style}
               className="buttonEffect"
               node="button"
             >
               <i
                 aria-label="icon: edit"
                 className="anticon anticon-edit"
-                style={{ fontSize: 18 }}
+                style={styles.icon_style}
               >
                 <svg
                   viewBox="64 64 896 896"
@@ -66,11 +61,27 @@ class Edit extends Component {
             </button>
           }
         >
-          <ModalC setEditedData={this.props.setEditedData} handleModal={this.handleModal} user={this.props.user} />
+          <ModalC
+            setEditedData={this.props.setEditedData}
+            handleModal={this.handleModal}
+            user={this.props.user}
+          />
         </Modal>
       </div>
     );
   }
 }
+
+const styles = {
+  edit_but_style: {
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    outline: "none",
+  },
+  icon_style: {
+    fontSize: 18,
+  },
+};
 
 export default Edit;

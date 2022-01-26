@@ -7,12 +7,7 @@ const Heart = ({ id, like }) => {
   return (
     <span>
       <button
-        style={{
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          outline: "none",
-        }}
+        style={styles.heart_but_style}
         onClick={() => {
           const res = likeUser(id, !fill);
           if (res !== null) setFill(!fill);
@@ -21,7 +16,7 @@ const Heart = ({ id, like }) => {
         <i
           aria-label="icon: heart"
           className="anticon anticon-heart"
-          style={{ color: "rgb(255, 0, 0)", fontSize: 20 }}
+          style={styles.icon_style}
         >
           <svg
             viewBox="64 64 896 896"
@@ -42,5 +37,18 @@ const Heart = ({ id, like }) => {
     </span>
   );
 };
+
+const styles = {
+  heart_but_style: {
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    outline: "none",
+  },
+  icon_style: { 
+    color: "rgb(255, 0, 0)", 
+    fontSize: 20 
+  }
+}
 
 export default Heart;

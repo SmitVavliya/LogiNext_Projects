@@ -1,7 +1,7 @@
 package com.springboot.backend.Controller;
 
-// import java.util.ArrayList;
-// import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.springboot.backend.Models.User;
@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-//import org.springframework.data.domain.Sort;
-//import org.springframework.data.domain.Sort.Direction;
-//import org.springframework.data.domain.Sort.Order;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,35 +40,42 @@ public class UserController {
             Pageable pageable = PageRequest.of(pageNumber - 1, 4);
             Page<User> users = this.userRepository.findAll(pageable);
             return ResponseEntity.ok(users);
-        	
+        } catch (Exception e) {
+            return ResponseEntity.ok("Error...");
+        }
+    }
+    
+    @GetMapping("/sorted/{pageNumber}")
+    public ResponseEntity<?> getSortedUsers(@PathVariable Integer pageNumber, @RequestParam(required = false, defaultValue = "name, asc") String sort[]) {
+        try {
 // 			Sorting 
-//        	List<Order> orders = new ArrayList<Order>(); 
-//        	if(sort.length > 2) {
-//        		int sz = sort.length;
-//                for (int i = 0; i < sz; i += 2) {
-//                	orders.add(new Order(getSortDirection(sort[i + 1]), sort[i]));
-//                }        		
-//        	} else {
-//        		orders.add(new Order(getSortDirection(sort[1]), sort[0]));
-//        	}
-//        	
-//	        Pageable pageable = PageRequest.of(pageNumber - 1, 4, Sort.by(orders));
-//	        Page<User> users = this.userRepository.findAll(pageable);
-//	        return ResponseEntity.ok(users);
+        	List<Order> orders = new ArrayList<Order>(); 
+        	if(sort.length > 2) {
+        		int sz = sort.length;
+                for (int i = 0; i < sz; i += 2) {
+                	orders.add(new Order(getSortDirection(sort[i + 1]), sort[i]));
+                }        		
+        	} else {
+        		orders.add(new Order(getSortDirection(sort[1]), sort[0]));
+        	}
+        	
+	        Pageable pageable = PageRequest.of(pageNumber - 1, 4, Sort.by(orders));
+	        Page<User> users = this.userRepository.findAll(pageable);
+	        return ResponseEntity.ok(users);
         } catch (Exception e) {
             return ResponseEntity.ok("Error...");
         }
     }
 
-//    private Direction getSortDirection(String string) {
-//		if(string.equals("asc")) {
-//			return Sort.Direction.ASC;
-//		}
-//		if(string.equals("desc")) {
-//			return Sort.Direction.DESC;
-//		}
-//		return null;
-//	}
+    private Direction getSortDirection(String string) {
+		if(string.equals("asc")) {
+			return Sort.Direction.ASC;
+		}
+		if(string.equals("desc")) {
+			return Sort.Direction.DESC;
+		}
+		return null;
+	}
 
 	@GetMapping("/api/{userId}")
     public ResponseEntity<?> getUser(@PathVariable String userId) {
@@ -82,12 +89,12 @@ public class UserController {
     @PostMapping(path = "/", consumes = "application/json")
     public ResponseEntity<?> addUser(@RequestBody User user) {
         try {
-//            List<User> list = new ArrayList<>(this.userRepository.findAll());
-//            for (User userData : list) {
-//                if (userData.getUsername().equals(user.getUsername())) {
-//                    return ResponseEntity.ok("Already In Use...");
-//                }
-//            }
+            List<User> list = new ArrayList<>(this.userRepository.findAll());
+            for (User userData : list) {
+                if (userData.getPhone().equals(user.getPhone())) {
+                    return ResponseEntity.ok("Already In Use...");
+                }
+            }
 
             User userData = this.userRepository.save(user);
             return ResponseEntity.ok(userData);
@@ -95,7 +102,7 @@ public class UserController {
             return ResponseEntity.ok("Error...");
         }
     }
-
+    
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable String userId) {
         try {
